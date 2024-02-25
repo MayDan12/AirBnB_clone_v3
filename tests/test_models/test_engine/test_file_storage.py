@@ -113,3 +113,31 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+    """ This is where i editted"""
+
+
+    def test_get_method(self):
+        """Test the get method in FileStorage"""
+        user = User()
+        self.file_storage.new(user)
+        self.file_storage.save()
+
+        retrieved_user = self.file_storage.get(User, user.id)
+        self.assertEqual(retrieved_user, user)
+
+    def test_count_method(self):
+        """Test the count method in FileStorage"""
+        count_before = self.file_storage.count()
+        user = User()
+        self.file_storage.new(user)
+        self.file_storage.save()
+        count_after = self.file_storage.count()
+        self.assertEqual(count_after, count_before + 1)
+
+        amenity = Amenity()
+        self.file_storage.new(amenity)
+        self.file_storage.save()
+        count_all_after = self.file_storage.count()
+        self.assertEqual(count_all_after, count_after + 1)
