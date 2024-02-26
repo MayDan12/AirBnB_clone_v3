@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 """This is the route for handling Place objects and operations"""
 from flask import Flask, jsonify, abort, request
-from models.state import State
-from models.city import City
+
 from models import storage
 from api.v1.views import app_views
-from models.place import Place
 from models.place import Place
 
 
