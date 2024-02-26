@@ -7,7 +7,7 @@ from models import storage
 from models.user import User
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
-def get_all_users(user_id):
+def get_all_users():
   """This retrieves the list of all user objects"""
   user_list = []
   all_user =  storage.all(User)
@@ -22,7 +22,7 @@ def create_user():
   create route for users
   Return the newly created user obj
   """
-  user_json = request.get_json(silent=True)
+  user_json = request.json
   if user_json is None:
     abort(400, 'Not a JSON')
   if "email" not in user_json:
@@ -55,7 +55,7 @@ def put_user(user_id):
   """
   This updates specific user by id
   """
-  user_json = request.get_json(silent=True)
+  user_json = request.json
   if user_json is None:
     abort(400,'Not a JSON')
 
