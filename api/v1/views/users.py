@@ -12,7 +12,7 @@ def get_all_users(user_id):
   user_list = []
   all_user =  storage.all("User")
   for obj in all_user.values():
-    user_list.append(obj.to_json())
+    user_list.append(obj.to_dict())
 
   return jsonify(user_list)
 
@@ -32,7 +32,7 @@ def create_user():
 
   new_user = User(**user_json)
   new_user.save()
-  response = jsonify(new_user.to_json())
+  response = jsonify(new_user.to_dict())
   response.status_code = 201
 
   return response
@@ -48,7 +48,7 @@ def get_user_byid(user_id):
   if fetch_obj is None:
     abort(404)
   
-  return jsonify(fetch_obj.to_json())
+  return jsonify(fetch_obj.to_dict())
 
 @app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
 def put_user(user_id):
@@ -70,7 +70,7 @@ def put_user(user_id):
 
   fetch_obj.save()
 
-  return jsonify(fetch_obj.to_json())
+  return jsonify(fetch_obj.to_dict())
 
 
 @app_views.route("/users/<user_id>",  methods=["DELETE"], strict_slashes=False)
