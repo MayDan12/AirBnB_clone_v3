@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import jsonify, Flask, Blueprint
+from flask import jsonify, Flask, Blueprint, make_response
 from os import getenv
 from models import storage
 from api.v1.views import app_views
@@ -14,6 +14,12 @@ app.register_blueprint(app_views)
 def teardown_appcontext(exception):
     """Teardown app context"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(e):
+    """Page not found"""
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
