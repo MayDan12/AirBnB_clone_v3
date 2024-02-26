@@ -42,7 +42,7 @@ def create_reviews(place_id):
 
     review_new = Review(**review_json)
     review_new.save()
-    response = jsonify(new_review.to_json())
+    response = jsonify(review_new.to_json())
     response.status_code = 201
 
     return response
