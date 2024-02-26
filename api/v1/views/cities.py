@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """ Configures RESTful api for the cities route """
 from flask import Flask, jsonify, abort, request
+from models.state import State
+from models.city import City
 from api.v1.views import app_views
-from models import storage, State, City
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
