@@ -1,7 +1,11 @@
 #!/usr/bin/python3
 """This is the route for handling Place objects and operations"""
-from flask import jsonify, abort, request
-from api.v1.views import app_views, storage
+from flask import Flask, jsonify, abort, request
+from models.state import State
+from models.city import City
+from models import storage
+from api.v1.views import app_views
+from models.place import Place
 from models.place import Place
 
 
@@ -40,7 +44,7 @@ def create_place(city_id):
 
     place_new = Place(**place_json)
     place_new.save()
-    response = jsonify(place_new.to_json())
+    response = jsonify(place_new.to_dict())
     response.status_code = 201
 
     return response

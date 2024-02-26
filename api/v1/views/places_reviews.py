@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 
 """ Configures RESTful api for the places_reviews route """
-from flask import jsonify, request, abort
-from api.v1.views import app_views, storage
+from flask import Flask, jsonify, abort, request
+from models.state import State
+from models.city import City
 from models import storage
+from api.v1.views import app_views
 from models.review import Review
+from models.place import Places
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
