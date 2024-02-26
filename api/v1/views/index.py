@@ -10,4 +10,4 @@ def status():
     Method: GET
     Description: Returns a JSON representation of the status of the API.
     """
-    return jsonify({'status': 'OK'})
+    return jsonify({"status": "OK"})
