@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" Configures RESTful api for the states route """
+""" Configures RESTful api for the users route """
 from flask import jsonify, request, abort
 from api.v1.views import app_views, storage
 from models import storage
