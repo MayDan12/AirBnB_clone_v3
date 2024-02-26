@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """ Configures RESTful api for the amenities route """
 from flask import Flask, jsonify, abort, request
-from models.state import State
-from models.city import City
 from models import storage
 from models.amenity import Amenity
 from api.v1.views import app_views

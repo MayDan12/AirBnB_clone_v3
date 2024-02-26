@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 """This is the route for handling Place objects and operations"""
 from flask import Flask, jsonify, abort, request
-
 from models import storage
-from api.v1.views import app_views
+from api.v1.views import app_views, storage
 from models.place import Place
 
 
-@app_views.route("/cities/<city_id>/places", methods=["GET"],
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def places_by_city(city_id):
     """
@@ -22,14 +21,14 @@ def places_by_city(city_id):
     return jsonify(place_list)
 
 
-@app_views.route("/cities/<city_id>/places", methods=["POST"],
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def place_create(city_id):
     """
     create place route
     :return: newly created Place obj
     """
-    place_json = request.get_json(silent=True)
+    place_json = request.json
     if place_json is None:
         abort(400, 'Not a JSON')
     if not storage.get("User", place_json["user_id"]):
@@ -51,7 +50,7 @@ def place_create(city_id):
     return resp
 
 
-@app_views.route("/places/<place_id>",  methods=["GET"],
+@app_views.route('/places/<place_id>',  methods=['GET'],
                  strict_slashes=False)
 def place_by_id(place_id):
     """
@@ -68,7 +67,7 @@ def place_by_id(place_id):
     return jsonify(fetched_obj.to_dict())
 
 
-@app_views.route("/places/<place_id>",  methods=["PUT"],
+@app_views.route('/places/<place_id>',  methods=['PUT'],
                  strict_slashes=False)
 def place_put(place_id):
     """
@@ -76,7 +75,7 @@ def place_put(place_id):
     :param place_id: Place object ID
     :return: Place object and 200 on success, or 400 or 404 on failure
     """
-    place_json = request.get_json(silent=True)
+    place_json = request.json
 
     if place_json is None:
         abort(400, 'Not a JSON')
@@ -95,7 +94,7 @@ def place_put(place_id):
     return jsonify(fetched_obj.to_dict())
 
 
-@app_views.route("/places/<place_id>",  methods=["DELETE"],
+@app_views.route('/places/<place_id>',  methods=['DELETE'],
                  strict_slashes=False)
 def place_delete_by_id(place_id):
     """

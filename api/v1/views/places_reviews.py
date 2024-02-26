@@ -2,12 +2,10 @@
 
 """ Configures RESTful api for the places_reviews route """
 from flask import Flask, jsonify, abort, request
-from models.state import State
-from models.city import City
 from models import storage
-from api.v1.views import app_views
+from api.v1.views import app_views, storage
 from models.review import Review
-from models.place import Places
+
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
@@ -45,7 +43,7 @@ def create_reviews(place_id):
 
     review_new = Review(**review_json)
     review_new.save()
-    response = jsonify(review_new.to_json())
+    response = jsonify(review_new.to_dict())
     response.status_code = 201
 
     return response
