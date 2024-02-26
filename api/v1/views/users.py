@@ -6,17 +6,17 @@ from api.v1.views import app_views, storage
 from models import storage
 from models.user import User
 
-@app_views.route("/users", methods=['GET'], strict_slashes=False)
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_users(user_id):
   """This retrieves the list of all user objects"""
   user_list = []
-  all_user =  storage.all("User")
+  all_user =  storage.all(User)
   for obj in all_user.values():
     user_list.append(obj.to_dict())
 
   return jsonify(user_list)
 
-@app_views.route("/users", methods=["POST"], strict_slashes=False)
+@app_views.route('/users', methods=["POST"], strict_slashes=False)
 def create_user():
   """
   create route for users
@@ -37,7 +37,7 @@ def create_user():
 
   return response
 
-@app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=["GET"], strict_slashes=False)
 def get_user_byid(user_id):
   """
   This gets a specific user object by id
@@ -50,7 +50,7 @@ def get_user_byid(user_id):
   
   return jsonify(fetch_obj.to_dict())
 
-@app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=["PUT"], strict_slashes=False)
 def put_user(user_id):
   """
   This updates specific user by id
@@ -73,7 +73,7 @@ def put_user(user_id):
   return jsonify(fetch_obj.to_dict())
 
 
-@app_views.route("/users/<user_id>",  methods=["DELETE"], strict_slashes=False)
+@app_views.route('/users/<user_id>',  methods=["DELETE"], strict_slashes=False)
 def delete_user_by_id(user_id):
     """
     This method deletes User by id
