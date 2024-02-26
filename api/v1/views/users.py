@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+
 """ Configures RESTful api for the states route """
 from flask import jsonify, request, abort
-from api.v1.views import app_views
+from api.v1.views import app_views, storage
 from models import storage
 from models.user import User
 
@@ -11,9 +12,9 @@ def get_all_users(user_id):
   user_list = []
   all_user =  storage.all("User")
   for obj in all_user.values():
-    all_user.append(obj.to_json())
+    user_list.append(obj.to_json())
 
-  return jsonify(all_user)
+  return jsonify(user_list)
 
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
 def create_user():
