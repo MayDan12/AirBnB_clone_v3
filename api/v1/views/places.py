@@ -14,6 +14,7 @@ from models.place import Place
 def places_by_city(city_id):
     """
     retrieves all Place objects by city
+    :return: json of all Places
     """
     place_list = []
     city_obj = storage.get("City", str(city_id))
@@ -22,13 +23,15 @@ def places_by_city(city_id):
 
     return jsonify(place_list)
 
+
 @app_views.route("/cities/<city_id>/places", methods=["POST"],
                  strict_slashes=False)
-def create_place(city_id):
+def place_create(city_id):
     """
-    This method create place route
+    create place route
+    :return: newly created Place obj
     """
-    place_json = request.json
+    place_json = request.get_json(silent=True)
     if place_json is None:
         abort(400, 'Not a JSON')
     if not storage.get("User", place_json["user_id"]):
@@ -42,18 +45,21 @@ def create_place(city_id):
 
     place_json["city_id"] = city_id
 
-    place_new = Place(**place_json)
-    place_new.save()
-    response = jsonify(place_new.to_dict())
-    response.status_code = 201
+    new_place = Place(**place_json)
+    new_place.save()
+    resp = jsonify(new_place.to_dict())
+    resp.status_code = 201
 
-    return response
+    return resp
+
 
 @app_views.route("/places/<place_id>",  methods=["GET"],
                  strict_slashes=False)
 def place_by_id(place_id):
     """
-    This method gets a specific Place object by ID
+    gets a specific Place object by ID
+    :param place_id: place object id
+    :return: place obj with the specified id or error
     """
 
     fetched_obj = storage.get("Place", str(place_id))
@@ -68,9 +74,11 @@ def place_by_id(place_id):
                  strict_slashes=False)
 def place_put(place_id):
     """
-    This method updates specific Place object by ID
+    updates specific Place object by ID
+    :param place_id: Place object ID
+    :return: Place object and 200 on success, or 400 or 404 on failure
     """
-    place_json = request.json
+    place_json = request.get_json(silent=True)
 
     if place_json is None:
         abort(400, 'Not a JSON')
@@ -80,9 +88,9 @@ def place_put(place_id):
     if fetched_obj is None:
         abort(404)
 
-    for key, value in place_json.items():
+    for key, val in place_json.items():
         if key not in ["id", "created_at", "updated_at", "user_id", "city_id"]:
-            setattr(fetched_obj, key, value)
+            setattr(fetched_obj, key, val)
 
     fetched_obj.save()
 
@@ -93,7 +101,9 @@ def place_put(place_id):
                  strict_slashes=False)
 def place_delete_by_id(place_id):
     """
-    This method deletes Place by id
+    deletes Place by id
+    :param place_id: Place object id
+    :return: empty dict with 200 or 404 if not found
     """
 
     fetched_obj = storage.get("Place", str(place_id))
