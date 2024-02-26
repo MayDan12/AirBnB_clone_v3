@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Imports the Blueprint object from the flask module."""
 from flask import Blueprint
 
 

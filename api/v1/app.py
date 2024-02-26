@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+""" Configures RESTful api for the states route """
 from flask import jsonify, Flask, Blueprint, make_response
 from os import getenv
 from models import storage
